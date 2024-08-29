@@ -49,10 +49,8 @@ faba_data <- faba_data %>%
   mutate(cultivar = factor(cultivar, levels=c("E1", "E2", "H", "L1", "L2")))
 
 ggplot(data=faba_data, aes(x=cultivar, y=height)) + 
-  geom_point(aes(colour=cultivar), size=2, alpha=0.6) +
   geom_boxplot(fill=penguin_corp_color("pink")) +
-  scale_color_manual(values=base_palette) +
-  scale_fill_manual(values=base_palette) +
+  geom_point(aes(colour=cultivar), size=2, alpha=0.6) +
   theme_bw() +
   theme(axis.text.x=element_text(angle=45, hjust=1, size=10))
   
