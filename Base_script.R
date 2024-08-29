@@ -9,6 +9,7 @@ install.packages('ggpubr')
 install.packages('patchwork')
 install.packages('cowplot')
 install.packages('viridis')                 #color gradients
+install.packages('RColorBrewer')            #gradients
 install.packages('usethis')                 #for GitHub
 #install.packages('PerformaceAnalytics')
 #install.packages('lme4')
@@ -18,6 +19,7 @@ library('ggpubr')
 library('patchwork')
 library('cowplot')
 library('viridis')
+library('RColorBrewer')
 library('usethis')
 #library('PerformanceAnalytics')
 #library('lme4')
@@ -49,12 +51,27 @@ faba_data <- faba_data %>%
   mutate(cultivar = factor(cultivar, levels=c("E1", "E2", "H", "L1", "L2")))
 
 ggplot(data=faba_data, aes(x=cultivar, y=height)) + 
-  geom_boxplot(fill=penguin_corp_color("pink")) +
-  geom_point(aes(colour=cultivar), size=2, alpha=0.6) +
+  geom_boxplot() +
+  geom_point(aes(color=cultivar), size=2, alpha=0.6) +
   theme_bw() +
   theme(axis.text.x=element_text(angle=45, hjust=1, size=10))
-  
-#------------------------------------------------------------------------------
+
+ggplot(faba_data, aes(x=cultivar, y=height, fill=cultivar)) + 
+  geom_boxplot(color="red", alpha=0.3) +
+  theme(legend.position="none") +
+  scale_fill_brewer(palette="BuPu")
+
+#Highlight one group
+faba_data %>%
+  mutate(hlt = ifelse(cultivar=="L1", "Highlighted", "Normal")) %>%
+  ggplot(aes(x=cultivar, y=height, fill=hlt, alpha=hlt)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values = c("#69b3a2", "grey")) + 
+  scale_alpha_manual(values = c(1, 0.5)) + 
+  theme(legend.position = "none") +
+  geom_jitter(color="black", size=0.4, alpha=0.9)
+
+#-theme_classic()#------------------------------------------------------------------------------
 
 #Create own color palettes
 
