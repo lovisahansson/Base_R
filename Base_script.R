@@ -8,8 +8,8 @@ install.packages('tidyverse')
 install.packages('ggpubr')
 install.packages('patchwork')
 install.packages('cowplot')
-install.packages('viridis')
-install.packages('usethis')
+install.packages('viridis')                 #color gradients
+install.packages('usethis')                 #for GitHub
 #install.packages('PerformaceAnalytics')
 #install.packages('lme4')
 
@@ -18,13 +18,16 @@ library('ggpubr')
 library('patchwork')
 library('cowplot')
 library('viridis')
+library('usethis')
 #library('PerformanceAnalytics')
 #library('lme4')
 
 #------------------------------------------------------------------------------
 
 #To mutate the data set at once without having to use multiple commands
-data <- read.csv("filename.csv", header=T, sep=",") %>%
+faba_data <- read.csv("faba_bean_phenotypic_traits.csv", header=T, sep=",")
+
+data <- read.csv("faba_bean_phenotypic_traits.csv", header=T, sep=",") %>%
   mutate_if(is.character,as.factor) %>%
   mutate_at(c('A', 'B'), as.factor)
 
